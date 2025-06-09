@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: hls-https-proxy
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    plan: free
