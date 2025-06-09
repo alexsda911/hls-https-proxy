@@ -20,7 +20,9 @@ app.get(['/proxy', '/proxy.m3u8'], async (req, res) => {
     if (url.endsWith('.m3u8') || contentType.includes('mpegurl')) {
       const text = await response.text();
       const baseUrl = url.substring(0, url.lastIndexOf("/") + 1);
-      const proxyBase = `${req.protocol}://${req.get('host')}${req.path}`;
+      const proto = req.headers['x-forwarded-proto'] || 'http';
+      const proxyBase = `${proto}://${req.get('host')}${req.path}`;
+
 
       // Заменяем как относительные, так и абсолютные ts-ссылки
       const updated = text.replace(/^(?!#)(.+\.ts)$/gm, (line) => {
