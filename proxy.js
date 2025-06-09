@@ -16,7 +16,6 @@ app.get('/proxy', async (req, res) => {
     const response = await fetch(url);
     const contentType = response.headers.get('content-type') || 'application/octet-stream';
 
-    // Если это m3u8, нужно подменить ссылки внутри
     if (url.endsWith('.m3u8') || contentType.includes('mpegurl')) {
       const text = await response.text();
       const baseUrl = url.substring(0, url.lastIndexOf("/") + 1);
@@ -32,7 +31,6 @@ app.get('/proxy', async (req, res) => {
       return res.status(200).send(updated);
     }
 
-    // Иначе просто проксируем сегмент
     const buffer = await response.arrayBuffer();
     res.setHeader('Content-Type', contentType);
     return res.status(200).send(Buffer.from(buffer));
