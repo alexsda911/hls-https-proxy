@@ -5,7 +5,7 @@ import cors from 'cors';
 const app = express();
 app.use(cors());
 
-app.get('/proxy', async (req, res) => {
+app.get(['/proxy', '/proxy.m3u8'], async (req, res) => {
   const url = req.query.url;
 
   if (!url || !url.startsWith('http://hls3.bashtel.ru')) {
